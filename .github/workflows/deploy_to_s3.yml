@@ -1,0 +1,22 @@
+name: Upload Language Translator to S3
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Zip the Application
+        run: zip -r language-translator.zip .
+
+      - name: Upload to S3
+        run: |
+          aws s3 cp language-translator.zip s3://langbucket/
+        env:
+          AWS_ACCESS_KEY_ID: AKIAU6VTTDKHYWJZPGCQ
+          AWS_SECRET_ACCESS_KEY: 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
